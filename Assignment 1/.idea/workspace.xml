@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0f64568-f71b-48e0-930e-f523df948200" name="Default Changelist" comment="" />
+    <list default="true" id="c0f64568-f71b-48e0-930e-f523df948200" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project1.js" beforeDir="false" afterPath="$PROJECT_DIR$/project1.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1h9fmoLxYzdhMdmRV9cMWtIFukJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,13 +56,42 @@
       <workItem from="1599428391962" duration="2959000" />
       <workItem from="1599932231746" duration="97000" />
       <workItem from="1599932357740" duration="5922000" />
+      <workItem from="1599945100499" duration="3822000" />
+      <workItem from="1600193217820" duration="112000" />
+      <workItem from="1600193354738" duration="245000" />
+      <workItem from="1600222295534" duration="6283000" />
+      <workItem from="1600557692310" duration="139000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="309" y="97" key="#Plugins" timestamp="1600193594138">
+      <screen x="64" y="0" width="1304" height="912" />
+    </state>
+    <state x="309" y="97" key="#Plugins/64.0.1304.912@64.0.1304.912" timestamp="1600193594138" />
+    <state x="397" y="192" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1600193285010">
+      <screen x="64" y="0" width="1304" height="912" />
+    </state>
+    <state x="397" y="192" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/64.0.1304.912@64.0.1304.912" timestamp="1600193285010" />
+    <state x="498" y="198" key="FileChooserDialogImpl" timestamp="1600557804169">
+      <screen x="64" y="0" width="1304" height="912" />
+    </state>
+    <state x="498" y="198" key="FileChooserDialogImpl/64.0.1304.912@64.0.1304.912" timestamp="1600557804169" />
     <state x="379" y="194" width="672" height="678" key="search.everywhere.popup" timestamp="1599934521296">
       <screen x="64" y="0" width="1304" height="912" />
     </state>
