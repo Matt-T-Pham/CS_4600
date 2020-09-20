@@ -19,21 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aab8ac20-0389-46ff-a3c9-ca3be1678ec2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Assignment 1/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Assignment 2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ground.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/propeller.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shadow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uav.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment 1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment 1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment 1/project1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment 1/project1.js" afterDir="false" />
-    </list>
+    <list default="true" id="aab8ac20-0389-46ff-a3c9-ca3be1678ec2" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +51,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1600557816065</updated>
-      <workItem from="1600557817166" duration="3370000" />
+      <workItem from="1600557817166" duration="3464000" />
     </task>
     <servers />
   </component>
