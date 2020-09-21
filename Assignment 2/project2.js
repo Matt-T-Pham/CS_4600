@@ -1,3 +1,35 @@
+let sin = Math.sin;
+let cos = Math.cos;
+
+
+
+function getDegree(num){
+	return (num * Math.PI / 180)
+}
+function rotate(rot){
+	rot = getDegree(rot)
+	let rotateMatrix = [cos(rot),sin(rot),0,-sin(rot),cos(rot),0,0,0,1]
+	return rotateMatrix
+}
+
+function ApplyScale(scale){
+	let scaleMatrix = [scale,0,0,0,scale,0,0,0,scale]
+	return scaleMatrix
+}
+function trans(positionX, positionY) {
+	let translateMatrix = [0,0,0,0,0,0,positionX,positionY,0]
+	return translateMatrix;
+}
+function multiplyMatrix(mat1,mat2) {
+	let answerMatrix = [0,0,0,0,0,0,0,0,0]
+
+	for(let i = 0; i < mat1.length; i+=3){
+			answerMatrix[i]= 
+			answerMatrix[i+1]=
+			answerMatrix[i+2]=
+	}
+	return answerMatrix;
+}
 // Returns a 3x3 transformation matrix as an array of 9 values in column-major order.
 // The transformation first applies scale, then rotation, and finally translation.
 // The given rotation value is in degrees.
@@ -7,35 +39,11 @@ function GetTransform( positionX, positionY, rotation, scale )
 	// 1 0 0  |  cos()   sin()  0   |
 	// 0 1 0  |  -sin()  cos()  0   |
 	// 0 0 1  |  0        0     0   |
-
-
-
-	matrixScale = array(1, 0, 0, 0, 1, 0, 0, 0, 1)
-	matrixRotation = array(1, 0, 0, 0, 1, 0, 0, 0, 1)
-	matrixTransform = array(1, 0, 0, 0, 1, 0, 0, 0, 1)
-
-	console.log(positionX,positionY,rotation,scale)
-	// scale then rotation then transloation
-	//   0           1                2
-	for (let j = 0; j < 3; j++){
-		for (let i = 0; i < matrix.length; i++) {
-			//do math for scale
-			if (j ==0){
-				if( i == 0 || i == 4 || i == 8)
-					matrixScale[i] = matrixScale[i] * scale
-			}
-			// do math for rotation
-			else if (j == 1){
-			
-
-			} //do math for rotation
-			else if(j == 2){
-
-			}
-
-		}
-	}
-
+	let rotationMatrix = rotate(rotation)
+	let scaleMatrix = ApplyScale(scale)
+	let translateMatrix = trans(positionX,positionY)
+	//rotate * translate * scale
+	let matrixTransform =multiplyMatrix()
 
 	return matrix
 }
