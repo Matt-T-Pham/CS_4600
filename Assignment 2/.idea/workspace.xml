@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aab8ac20-0389-46ff-a3c9-ca3be1678ec2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project2.js" beforeDir="false" afterPath="$PROJECT_DIR$/project2.js" afterDir="false" />
     </list>
@@ -44,6 +45,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -58,6 +60,7 @@
       <workItem from="1600638989871" duration="841000" />
       <workItem from="1600647995139" duration="3591000" />
       <workItem from="1600715166528" duration="907000" />
+      <workItem from="1600725736874" duration="7404000" />
     </task>
     <servers />
   </component>
