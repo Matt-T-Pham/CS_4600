@@ -20,12 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f5b4738-268f-440f-be82-39d91b7dd93f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Assignment 3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment 2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment 2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +54,7 @@
       <option name="presentableId" value="Default" />
       <updated>1601159856420</updated>
       <workItem from="1601159858335" duration="462000" />
+      <workItem from="1601165243391" duration="2598000" />
     </task>
     <servers />
   </component>
@@ -75,5 +71,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
