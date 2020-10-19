@@ -1,3 +1,10 @@
+let sin = Math.sin;
+let cos = Math.cos;
+
+function getDegree(num){
+	return (num * (Math.PI / 180))
+}
+
 // This function takes the projection matrix, the translation, and two rotation angles (in radians) as input arguments.
 // The two rotations are applied around x and y axes.
 // It returns the combined 4x4 transformation matrix as an array in column-major order.
@@ -5,6 +12,8 @@
 // You can use the MatrixMult function defined in project4.html to multiply two 4x4 matrices in the same format.
 function GetModelViewProjection( projectionMatrix, translationX, translationY, translationZ, rotationX, rotationY )
 {
+	let rotx = getDegree(rotationX)
+	let roty = getDegree(rotationY)
 	// [TO-DO] Modify the code below to form the transformation matrix.
 	var trans = [
 		1, 0, 0, 0,
@@ -12,7 +21,20 @@ function GetModelViewProjection( projectionMatrix, translationX, translationY, t
 		0, 0, 1, 0,
 		translationX, translationY, translationZ, 1
 	];
-	var mvp = MatrixMult( projectionMatrix, trans );
+	var Xrotation = [
+		1, 0 ,0 ,0,
+		0, cos(rotx), sin(rotx), 0,
+		0, -sin(rotx), cos(rotx), 0,
+		0, 0, 0, 1
+	];
+	var Yrotation = [
+		cos(roty), 0, sin(roty), 0,
+		0, 1, 0, 0,
+		-sin(roty), 0, cos(roty), 0,
+		0, 0, 0, 1
+	];
+	var newTrans = MatrixMult(trans,MatrixMult(Xrotation, Yrotation))
+	var mvp = MatrixMult( projectionMatrix, newTrans);
 	return mvp;
 }
 
