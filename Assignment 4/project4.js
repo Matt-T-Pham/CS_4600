@@ -12,8 +12,9 @@ function getDegree(num){
 // You can use the MatrixMult function defined in project4.html to multiply two 4x4 matrices in the same format.
 function GetModelViewProjection( projectionMatrix, translationX, translationY, translationZ, rotationX, rotationY )
 {
-	let rotx = getDegree(rotationX)
-	let roty = getDegree(rotationY)
+	console.log(rotationY,rotationX)
+	let rotx = rotationX
+	let roty = rotationY
 	// [TO-DO] Modify the code below to form the transformation matrix.
 	var trans = [
 		1, 0, 0, 0,
@@ -28,9 +29,9 @@ function GetModelViewProjection( projectionMatrix, translationX, translationY, t
 		0, 0, 0, 1
 	];
 	var Yrotation = [
-		cos(roty), 0, sin(roty), 0,
+		cos(roty), 0, -sin(roty), 0,
 		0, 1, 0, 0,
-		-sin(roty), 0, cos(roty), 0,
+		sin(roty), 0, cos(roty), 0,
 		0, 0, 0, 1
 	];
 	var newTrans = MatrixMult(trans,MatrixMult(Xrotation, Yrotation))
@@ -46,6 +47,12 @@ class MeshDrawer
 	// The constructor is a good place for taking care of the necessary initializations.
 	constructor()
 	{
+
+		this.prog   = InitShaderProgram( objVS, objFS );
+		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
+
+		this.pos = gl.getUniformLocation( this.prog, 'pos' );
+		this.vcolor = gl.getUniformLocation( this.prog, 'clr' );
 		// [TO-DO] initializations
 	}
 	
@@ -105,3 +112,27 @@ class MeshDrawer
 	}
 	
 }
+// Vertex shader source code
+var objVS = `
+	attribute vec3 pos;
+	attribute vec4 clr;
+	
+	uniform mat4 mvp;
+	
+	varying vec4 vcolor;
+	
+	void main()
+	{
+		gl_Position = mvp * vec4(pos,1);
+		vcolor = clr;
+	}
+`;
+// Fragment shader source code
+var objFS = `
+	precision mediump float;
+	varying vec4 vcolor;
+	void main()
+	{
+		gl_FragColor = vcolor;
+	}
+`;
