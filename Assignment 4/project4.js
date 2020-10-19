@@ -12,7 +12,6 @@ function getDegree(num){
 // You can use the MatrixMult function defined in project4.html to multiply two 4x4 matrices in the same format.
 function GetModelViewProjection( projectionMatrix, translationX, translationY, translationZ, rotationX, rotationY )
 {
-	console.log(rotationY,rotationX)
 	let rotx = rotationX
 	let roty = rotationY
 	// [TO-DO] Modify the code below to form the transformation matrix.
@@ -49,11 +48,17 @@ class MeshDrawer
 	{
 
 		this.prog   = InitShaderProgram( objVS, objFS );
+
 		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
 
-		this.pos = gl.getUniformLocation( this.prog, 'pos' );
-		this.vcolor = gl.getUniformLocation( this.prog, 'clr' );
-		// [TO-DO] initializations
+		this.objPos = gl.getAttribLocation( this.prog, 'pos' );
+
+		this.vertbuffer = gl.createBuffer();
+
+		var pos = []
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertbuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
+
 	}
 	
 	// This method is called every time the user opens an OBJ file.
@@ -69,6 +74,11 @@ class MeshDrawer
 	setMesh( vertPos, texCoords )
 	{
 		// [TO-DO] Update the contents of the vertex buffer objects.
+		console.log(vertPos)
+		gl.useProgram(this.prog)
+		const vt = []
+
+		
 		this.numTriangles = vertPos.length / 3;
 	}
 	
@@ -86,7 +96,12 @@ class MeshDrawer
 	draw( trans )
 	{
 		// [TO-DO] Complete the WebGL initializations before drawing
-
+		gl.useProgram( this.prog );
+		gl.uniformMatrix4fv( this.mvp, false, trans );
+		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
+		gl.vertexAttribPointer( this.objPos, 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.objPos );
+		gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, this.vertbuffer );
 		gl.drawArrays( gl.TRIANGLES, 0, this.numTriangles );
 	}
 	
