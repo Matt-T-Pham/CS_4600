@@ -46,19 +46,12 @@ class MeshDrawer
 	// The constructor is a good place for taking care of the necessary initializations.
 	constructor()
 	{
-
 		this.prog   = InitShaderProgram( objVS, objFS );
-
 		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
-
-		this.objPos = gl.getAttribLocation( this.prog, 'pos' );
-
+		this.vertPos = gl.getAttribLocation( this.prog, 'vertPos' );
+		console.log(this.vertPos)
 		this.vertbuffer = gl.createBuffer();
-
-		var pos = []
-		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertbuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
-
+		this.textureBuffer = gl.createBuffer();
 	}
 	
 	// This method is called every time the user opens an OBJ file.
@@ -74,12 +67,15 @@ class MeshDrawer
 	setMesh( vertPos, texCoords )
 	{
 		// [TO-DO] Update the contents of the vertex buffer objects.
-		console.log(vertPos)
-		gl.useProgram(this.prog)
-		const vt = []
+		//gl.useProgram(this.prog)
 
-		
 		this.numTriangles = vertPos.length / 3;
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertbuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertPos), gl.STATIC_DRAW);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.textureBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
 	}
 	
 	// This method is called when the user changes the state of the
@@ -99,9 +95,8 @@ class MeshDrawer
 		gl.useProgram( this.prog );
 		gl.uniformMatrix4fv( this.mvp, false, trans );
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
-		gl.vertexAttribPointer( this.objPos, 3, gl.FLOAT, false, 0, 0 );
-		gl.enableVertexAttribArray( this.objPos );
-		gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, this.vertbuffer );
+		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.vertPos );
 		gl.drawArrays( gl.TRIANGLES, 0, this.numTriangles );
 	}
 	
@@ -130,24 +125,21 @@ class MeshDrawer
 // Vertex shader source code
 var objVS = `
 	attribute vec3 pos;
-	attribute vec4 clr;
-	
 	uniform mat4 mvp;
-	
-	varying vec4 vcolor;
 	
 	void main()
 	{
 		gl_Position = mvp * vec4(pos,1);
-		vcolor = clr;
 	}
 `;
+// gl_FragColor = vcolor;
 // Fragment shader source code
 var objFS = `
 	precision mediump float;
 	varying vec4 vcolor;
 	void main()
 	{
-		gl_FragColor = vcolor;
+		gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
+		
 	}
 `;
