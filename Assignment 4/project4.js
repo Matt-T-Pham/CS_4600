@@ -48,10 +48,21 @@ class MeshDrawer
 	{
 		this.prog   = InitShaderProgram( objVS, objFS );
 		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
-		this.vertPos = gl.getAttribLocation( this.prog, 'vertPos' );
-		console.log(this.vertPos)
+		this.vertPos = gl.getAttribLocation( this.prog, 'pos' );
 		this.vertbuffer = gl.createBuffer();
 		this.textureBuffer = gl.createBuffer();
+
+		this.loaded = gl.getUniformLocation(this.prog,'loaded');
+
+		this.swap = gl.getUniformLocation(this.prog,'swap');
+		this.flag = gl.getAttribLocation(this.prog, 'flag');
+
+		this.toShow = gl.getUniformLocation(this.prog,'toShow');
+		this.sampler = gl.getUniformLocation(this.prog,'tex');
+		this.txc = gl.getAttribLocation(this.prog,'txc');
+
+		this.loaded = false;
+
 	}
 	
 	// This method is called every time the user opens an OBJ file.
@@ -66,8 +77,6 @@ class MeshDrawer
 	// Note that this method can be called multiple times.
 	setMesh( vertPos, texCoords )
 	{
-		// [TO-DO] Update the contents of the vertex buffer objects.
-		//gl.useProgram(this.prog)
 
 		this.numTriangles = vertPos.length / 3;
 
@@ -76,6 +85,8 @@ class MeshDrawer
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.textureBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+
+
 	}
 	
 	// This method is called when the user changes the state of the
@@ -84,6 +95,14 @@ class MeshDrawer
 	swapYZ( swap )
 	{
 		// [TO-DO] Set the uniform parameter(s) of the vertex shader
+		gl.useProgram(this.prog);
+		console.log(this.swap)
+		if(swap){
+			gl.uniform1i(this.swap,1);
+		}else{
+			gl.uniform1i(this.swap,0);
+		}
+
 	}
 	
 	// This method is called to draw the triangular mesh.
@@ -97,6 +116,11 @@ class MeshDrawer
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
 		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
 		gl.enableVertexAttribArray( this.vertPos );
+
+
+		gl.bindBuffer( gl.ARRAY_BUFFER, this.textureBuffer );
+		gl.vertexAttribPointer( this.txc, 2, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.txc );
 		gl.drawArrays( gl.TRIANGLES, 0, this.numTriangles );
 	}
 	
@@ -105,12 +129,24 @@ class MeshDrawer
 	setTexture( img )
 	{
 		// [TO-DO] Bind the texture
-
+		const mytex = gl.createTexture();
+		gl.bindTexture(gl.TEXTURE_2D,mytex);
 		// You can set the texture image data using the following command.
 		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img );
 
+		gl.generateMipmap(gl.TEXTURE_2D);
+		gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);
+
 		// [TO-DO] Now that we have a texture, it might be a good idea to set
 		// some uniform parameter(s) of the fragment shader, so that it uses the texture.
+		gl.useProgram(this.prog)
+		gl.uniform1i(this.sampler,0)
+
+		this.loaded = true;
+		gl.useProgram(this.prog);
+		gl.uniform1i(this.toShow,1);
+
+
 	}
 	
 	// This method is called when the user changes the state of the
@@ -119,6 +155,18 @@ class MeshDrawer
 	showTexture( show )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify if it should use the texture.
+
+		gl.useProgram(this.prog);
+		if(show){
+			if(this.loaded === true){
+				gl.uniform1i(this.toShow,1);
+			}else{
+				gl.uniform1i(this.toShow,0);
+			}
+		}else{
+			gl.uniform1i(this.toShow,0);
+		}
+	console.log(this.toShow)
 	}
 	
 }
@@ -126,20 +174,41 @@ class MeshDrawer
 var objVS = `
 	attribute vec3 pos;
 	uniform mat4 mvp;
+	uniform int swap;
+	
+	uniform bool loaded;
+	
+	varying vec2 texCoord;
+	attribute vec2 txc;
 	
 	void main()
 	{
-		gl_Position = mvp * vec4(pos,1);
+		vec3 someVec;
+		if(swap == 1){
+			someVec.xyz = vec3(pos.x,pos.z,pos.y);
+		}else{
+			someVec.xyz = vec3(pos.x,pos.y,pos.z);
+		}
+		texCoord = txc;
+		gl_Position = mvp * vec4(someVec,1);
 	}
 `;
-// gl_FragColor = vcolor;
+// gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
 // Fragment shader source code
 var objFS = `
 	precision mediump float;
-	varying vec4 vcolor;
+	
+	uniform bool toShow;
+	
+	uniform sampler2D tex;
+	varying vec2 texCoord;
+	
 	void main()
 	{
-		gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
-		
+		if(toShow){
+			gl_FragColor = texture2D(tex,texCoord);		
+		} else{
+			gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
+		}
 	}
 `;
