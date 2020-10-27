@@ -155,7 +155,6 @@ class MeshDrawer
 	showTexture( show )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify if it should use the texture.
-
 		gl.useProgram(this.prog);
 		if(show){
 			if(this.loaded === true){
@@ -166,7 +165,6 @@ class MeshDrawer
 		}else{
 			gl.uniform1i(this.toShow,0);
 		}
-	console.log(this.toShow)
 	}
 	
 }
