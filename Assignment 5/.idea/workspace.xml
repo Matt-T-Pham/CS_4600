@@ -19,15 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="703867be-9f15-4fb2-bb9a-8fb89b45ea95" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bricks.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nyra.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nyra.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teapot.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment 4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment 4/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment 4/project4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment 4/project4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project5.js" beforeDir="false" afterPath="$PROJECT_DIR$/project5.js" afterDir="false" />
-    </list>
+    <list default="true" id="703867be-9f15-4fb2-bb9a-8fb89b45ea95" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +51,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603754785884</updated>
-      <workItem from="1603754786936" duration="1983000" />
+      <workItem from="1603754786936" duration="2681000" />
     </task>
     <servers />
   </component>
