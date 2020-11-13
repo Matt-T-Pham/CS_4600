@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="703867be-9f15-4fb2-bb9a-8fb89b45ea95" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project5.js" beforeDir="false" afterPath="$PROJECT_DIR$/project5.js" afterDir="false" />
-    </list>
+    <list default="true" id="703867be-9f15-4fb2-bb9a-8fb89b45ea95" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +40,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Assignment 4" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Assignment 6" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -58,6 +55,7 @@
       <workItem from="1603919651258" duration="935000" />
       <workItem from="1603925581075" duration="6258000" />
       <workItem from="1604365819383" duration="5773000" />
+      <workItem from="1605304514282" duration="30000" />
     </task>
     <servers />
   </component>
@@ -80,9 +78,9 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="771" y="294" key="FileChooserDialogImpl" timestamp="1603755070875">
+    <state x="771" y="294" key="FileChooserDialogImpl" timestamp="1605304540932">
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
-    <state x="771" y="294" key="FileChooserDialogImpl/62.0.1858.1080/-1080.-418.1080.1880@62.0.1858.1080" timestamp="1603755070875" />
+    <state x="771" y="294" key="FileChooserDialogImpl/62.0.1858.1080/-1080.-418.1080.1880@62.0.1858.1080" timestamp="1605304540932" />
   </component>
 </project>
