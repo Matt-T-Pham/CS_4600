@@ -56,8 +56,14 @@ class MeshDrawer
 
 		this.toShow = gl.getUniformLocation(this.prog,'toShow');
 
+
+		this.x = gl.getUniformLocation(this.prog,'x');
+		this.y = gl.getUniformLocation(this.prog,'y');
+		this.z = gl.getUniformLocation(this.prog,'z');
+
 		this.vertbuffer = gl.createBuffer();
 		this.textureBuffer = gl.createBuffer();
+		this.normalBuffer = gl.createBuffer();
 
 	}
 	
@@ -74,6 +80,7 @@ class MeshDrawer
 	// Note that this method can be called multiple times.
 	setMesh( vertPos, texCoords, normals )
 	{
+
 		// [TO-DO] Update the contents of the vertex buffer objects.
 		this.numTriangles = vertPos.length / 3;
 
@@ -82,6 +89,9 @@ class MeshDrawer
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.textureBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
 	}
 	
 	// This method is called when the user changes the state of the
@@ -104,6 +114,8 @@ class MeshDrawer
 	// transformation matrix, which is the inverse-transpose of matrixMV.
 	draw( matrixMVP, matrixMV, matrixNormal )
 	{
+
+
 		gl.useProgram( this.prog );
 		gl.uniformMatrix4fv( this.mvp, false, matrixMVP );
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
@@ -163,12 +175,17 @@ class MeshDrawer
 	setLightDir( x, y, z )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify the light direction.
+		gl.useProgram(this.prog);
+		gl.uniform1f(this.x,x);
+		gl.uniform1f(this.y,y);
+		gl.uniform1f(this.z,z);
 	}
 	
 	// This method is called to set the shininess of the material
 	setShininess( shininess )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify the shininess.
+
 	}
 }
 // Vertex shader source code
@@ -199,8 +216,13 @@ var modelFS = `
 	varying vec2 texCoord;
 	uniform bool toShow;
 	
+	uniform float x;
+	uniform float y;
+	uniform float z;
+	
 	void main()
 	{
+		vec3 lightPos = vec3(x,y,z);
 		if(toShow){
 			gl_FragColor = texture2D(tex,texCoord);		
 		} else{
