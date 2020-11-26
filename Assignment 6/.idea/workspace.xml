@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="43a13138-f7d6-4bda-8e52-204146f0ad7e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="43a13138-f7d6-4bda-8e52-204146f0ad7e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +18,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Assignment 7" />
     <property name="settings.editor.selected.configurable" value="aws" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -43,6 +41,7 @@
       <workItem from="1606344890495" duration="3949000" />
       <workItem from="1606349371017" duration="315000" />
       <workItem from="1606349750597" duration="601000" />
+      <workItem from="1606424658670" duration="120000" />
     </task>
     <servers />
   </component>
@@ -50,6 +49,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="771" y="294" key="FileChooserDialogImpl" timestamp="1606424777035">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="771" y="294" key="FileChooserDialogImpl/62.0.1858.1080/-1080.-418.1080.1880@62.0.1858.1080" timestamp="1606424777035" />
     <state x="492" y="184" key="SettingsEditor" timestamp="1606272918963">
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
