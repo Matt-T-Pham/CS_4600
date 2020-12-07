@@ -226,8 +226,12 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		let totalF = Fs.add(Fd);
 
-		forces[springs[i].p0] = forces[springs[i].p0].add(totalF);
-		forces[springs[i].p1] = forces[springs[i].p1].sub(totalF);
+		forces[springs[i].p0].inc(totalF);
+		forces[springs[i].p1].dec(totalF);
+
+
+		//forces[springs[i].p0] = forces[springs[i].p0].add(totalF);
+		//forces[springs[i].p1] = forces[springs[i].p1].sub(totalF);
 
 
 	}
@@ -237,13 +241,8 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 	for (let j = 0; j < positions.length; j++) {
 
 		var acc = forces[j].div(particleMass);
-
-
-		velocities[j] = velocities[j].add(acc.mul(dt));
-		positions[j] = positions[j].add(velocities[j].mul(dt));
-
-		//velocities[j] = velocities[j].add(acc.mul(dt));
-
+		velocities[j].inc(acc.mul(dt));
+		positions[j].inc(velocities[j].mul(dt));
 	}
 
 	// [TO-DO] Handle collisions
