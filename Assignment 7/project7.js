@@ -42,7 +42,6 @@ class MeshDrawer
 	{
 		// [TO-DO] initializations
 		// Compile the shader program
-		//
 		this.prog = InitShaderProgram( modelVS, modelFS );
 		// Get the ids of the uniform variables in the shaders
 		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
@@ -201,8 +200,6 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 		forces[i] = new Vec3(0,0,0);
 		//gravity
 		forces[i] = forces[i].add(gravity.mul(particleMass));
-
-
 	}
 
 	for(let i = 0; i < springs.length; i++) {
@@ -223,9 +220,9 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		let Fs = DirectionVector.mul(stiffness * (springLength - restLength));
 
-		let timeLength = (velocities[springs[i].p1].sub(velocities[springs[i].p0])).dot(DirectionVector);
+		let l = (velocities[springs[i].p1].sub(velocities[springs[i].p0])).dot(DirectionVector);
 
-		let Fd = DirectionVector.mul(damping * timeLength);
+		let Fd = DirectionVector.mul(damping * l);
 
 		let totalF = Fs.add(Fd);
 
@@ -241,12 +238,14 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		var acc = forces[j].div(particleMass);
 
-		positions[j] = positions[j].add(velocities[j].mul(dt));
 
 		velocities[j] = velocities[j].add(acc.mul(dt));
+		positions[j] = positions[j].add(velocities[j].mul(dt));
+
+		//velocities[j] = velocities[j].add(acc.mul(dt));
 
 	}
-	console.log(velocities);
+
 	// [TO-DO] Handle collisions
 	for (let j = 0; j < positions.length; j++) {
 
