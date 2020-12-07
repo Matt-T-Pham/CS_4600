@@ -204,9 +204,7 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 
 	}
-	// p0 add them
 
-	//p1 sub them
 	for(let i = 0; i < springs.length; i++) {
 
 		let restLength = springs[i].rest;
@@ -231,13 +229,11 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		let totalF = Fs.add(Fd);
 
-		console.log(Fs,Fd,totalF)
 		forces[springs[i].p0] = forces[springs[i].p0].add(totalF);
 		forces[springs[i].p1] = forces[springs[i].p1].sub(totalF);
 
 
 	}
-
 
 	// [TO-DO] Update positions and velocities
 
@@ -250,36 +246,44 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 		velocities[j] = velocities[j].add(acc.mul(dt));
 
 	}
+	console.log(velocities);
 	// [TO-DO] Handle collisions
 	for (let j = 0; j < positions.length; j++) {
 
 		if (positions[j].x < -1.0 ) {
 			let temp = positions[j].x + 2.0;
-			positions[j].x = temp * restitution;
+			positions[j].x = temp * restitution - restitution - 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].y < -1.0 ) {
 			let temp = positions[j].y + 2.0;
-			positions[j].y = temp * restitution;
+			positions[j].y = temp * restitution - restitution - 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].z < -1.0 ) {
 			let temp = positions[j].z + 2.0;
-			positions[j].z = temp * restitution;
+			positions[j].z = temp * restitution - restitution - 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].x > 1.0 ) {
 			let temp = positions[j].x - 2.0;
-			positions[j].x = temp * restitution;
+			positions[j].x = temp * restitution - restitution + 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].y > 1.0 ) {
 			let temp = positions[j].y - 2.0;
-			positions[j].y = temp * restitution;
+			positions[j].y = temp * restitution - restitution + 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].z > 1.0 ) {
 			let temp = positions[j].z - 2.0;
-			positions[j].z = temp * restitution;
+			positions[j].z = temp * restitution - restitution + 1;
+			velocities[j] =  velocities[j].mul(-restitution);
 		}
 	}
-
 }
+
+
 
 // Vertex shader source code
 var modelVS = `
