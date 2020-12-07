@@ -83,7 +83,7 @@ class MeshDrawer
 	{
 		// [TO-DO] Update the contents of the vertex buffer objects.
 		this.numTriangles = vertPos.length / 3;
-				// [TO-DO] Update the contents of the vertex buffer objects.
+		// [TO-DO] Update the contents of the vertex buffer objects.
 		this.numTriangles = vertPos.length / 3;
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertbuffer);
@@ -191,17 +191,94 @@ class MeshDrawer
 
 // This function is called for every step of the simulation.
 // Its job is to advance the simulation for the given time step duration dt.
-// It updates the given positions and velocities.
+// It updates the given po-sitions and velocities.
 function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, particleMass, gravity, restitution )
 {
 	var forces = Array( positions.length ); // The total for per particle
 
 	// [TO-DO] Compute the total force of each particle
-	
+	for (let i = 0; i < forces.length; i++){
+		forces[i] = new Vec3(0,0,0);
+		//gravity
+		forces[i] = forces[i].add(gravity.mul(particleMass));
+
+
+	}
+	// p0 add them
+
+	//p1 sub them
+	for(let i = 0; i < springs.length; i++) {
+
+		let restLength = springs[i].rest;
+
+		let tempx =positions[springs[i].p1].x - positions[springs[i].p0].x;
+		let x =Math.pow(tempx, 2);
+		let tempy = positions[springs[i].p1].y - positions[springs[i].p0].y;
+		let y = Math.pow(tempy, 2)
+		let tempz = positions[springs[i].p1].z - positions[springs[i].p0].z;
+		let z =Math.pow(tempz , 2)
+		let xyz = x+y+z;
+
+		let springLength = Math.sqrt(xyz);
+
+		let DirectionVector = positions[springs[i].p1].sub(positions[springs[i].p0]);
+
+		let Fs = DirectionVector.mul(stiffness * (springLength - restLength));
+
+		let timeLength = (velocities[springs[i].p1].sub(velocities[springs[i].p0])).dot(DirectionVector);
+
+		let Fd = DirectionVector.mul(damping * timeLength);
+
+		let totalF = Fs.add(Fd);
+
+		console.log(Fs,Fd,totalF)
+		forces[springs[i].p0] = forces[springs[i].p0].add(totalF);
+		forces[springs[i].p1] = forces[springs[i].p1].sub(totalF);
+
+
+	}
+
+
 	// [TO-DO] Update positions and velocities
-	
+
+	for (let j = 0; j < positions.length; j++) {
+
+		var acc = forces[j].div(particleMass);
+
+		positions[j] = positions[j].add(velocities[j].mul(dt));
+
+		velocities[j] = velocities[j].add(acc.mul(dt));
+
+	}
 	// [TO-DO] Handle collisions
-	
+	for (let j = 0; j < positions.length; j++) {
+
+		if (positions[j].x < -1.0 ) {
+			let temp = positions[j].x + 2.0;
+			positions[j].x = temp * restitution;
+		}
+		if (positions[j].y < -1.0 ) {
+			let temp = positions[j].y + 2.0;
+			positions[j].y = temp * restitution;
+		}
+		if (positions[j].z < -1.0 ) {
+			let temp = positions[j].z + 2.0;
+			positions[j].z = temp * restitution;
+		}
+		if (positions[j].x > 1.0 ) {
+			let temp = positions[j].x - 2.0;
+			positions[j].x = temp * restitution;
+		}
+		if (positions[j].y > 1.0 ) {
+			let temp = positions[j].y - 2.0;
+			positions[j].y = temp * restitution;
+		}
+		if (positions[j].z > 1.0 ) {
+			let temp = positions[j].z - 2.0;
+			positions[j].z = temp * restitution;
+		}
+	}
+
 }
 
 // Vertex shader source code
@@ -242,7 +319,7 @@ var modelFS = `
 		if(toShow){
 			gl_FragColor = texture2D(tex,texCoord);		
 		} else{
-			gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
+			gl_FragColor = vec4(1,1,1,1);
 		}
 	}
 `;

@@ -50,6 +50,8 @@ class MeshDrawer
 
 		this.txc = gl.getAttribLocation(this.prog,'txc');
 
+		this.norm = gl.getAttribLocation(this.prog,'norm');
+
 		this.sampler = gl.getUniformLocation(this.prog,'tex');
 
 		this.swap = gl.getUniformLocation(this.prog,'swap');
@@ -60,6 +62,7 @@ class MeshDrawer
 		this.x = gl.getUniformLocation(this.prog,'x');
 		this.y = gl.getUniformLocation(this.prog,'y');
 		this.z = gl.getUniformLocation(this.prog,'z');
+		this.shiny = gl.getUniformLocation(this.prog,'shiny');
 
 		this.vertbuffer = gl.createBuffer();
 		this.textureBuffer = gl.createBuffer();
@@ -115,10 +118,16 @@ class MeshDrawer
 	draw( matrixMVP, matrixMV, matrixNormal )
 	{
 
-
 		gl.useProgram( this.prog );
 		gl.uniformMatrix4fv( this.mvp, false, matrixMVP );
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
+		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.vertPos );
+
+
+
+
+		gl.bindBuffer( this.norm, this.matrixNormal );
 		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
 		gl.enableVertexAttribArray( this.vertPos );
 
@@ -185,13 +194,15 @@ class MeshDrawer
 	setShininess( shininess )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify the shininess.
+		gl.useProgram(this.prog);
+		gl.uniform1f(this.shiny,shininess);
 
 	}
 }
 // Vertex shader source code
 var modelVS = `
 	attribute vec3 pos;
-	uniform mat4 mvp;
+	uniform mat4 mvp,norm;
 	varying vec2 texCoord;
 	attribute vec2 txc;
 	uniform int swap;
@@ -220,13 +231,17 @@ var modelFS = `
 	uniform float y;
 	uniform float z;
 	
+	uniform float shiny;
+	
 	void main()
 	{
 		vec3 lightPos = vec3(x,y,z);
+		
+		
 		if(toShow){
 			gl_FragColor = texture2D(tex,texCoord);		
 		} else{
-			gl_FragColor = vec4(1,gl_FragCoord.z*gl_FragCoord.z,0,1);
+			gl_FragColor = vec4(1,1,1,1);
 		}
 	}
 `;
