@@ -50,7 +50,8 @@ class MeshDrawer
 
 		this.txc = gl.getAttribLocation(this.prog,'txc');
 
-		this.norm = gl.getAttribLocation(this.prog,'norm');
+		this.norm = gl.getUniformLocation( this.prog, 'normal' );
+
 
 		this.sampler = gl.getUniformLocation(this.prog,'tex');
 
@@ -125,13 +126,6 @@ class MeshDrawer
 		gl.enableVertexAttribArray( this.vertPos );
 
 
-
-
-		gl.bindBuffer( this.norm, this.matrixNormal );
-		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
-		gl.enableVertexAttribArray( this.vertPos );
-
-
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.textureBuffer );
 		gl.vertexAttribPointer( this.txc, 2, gl.FLOAT, false, 0, 0 );
 		gl.enableVertexAttribArray( this.txc );
@@ -202,7 +196,7 @@ class MeshDrawer
 // Vertex shader source code
 var modelVS = `
 	attribute vec3 pos;
-	uniform mat4 mvp,norm;
+	uniform mat4 mvp,mv;
 	varying vec2 texCoord;
 	attribute vec2 txc;
 	uniform int swap;

@@ -206,6 +206,7 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		let restLength = springs[i].rest;
 
+		//length of
 		let tempx =positions[springs[i].p1].x - positions[springs[i].p0].x;
 		let x =Math.pow(tempx, 2);
 		let tempy = positions[springs[i].p1].y - positions[springs[i].p0].y;
@@ -216,7 +217,7 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		let springLength = Math.sqrt(xyz);
 
-		let DirectionVector = positions[springs[i].p1].sub(positions[springs[i].p0]);
+		let DirectionVector = (positions[springs[i].p1].sub(positions[springs[i].p0])).div(springLength);
 
 		let Fs = DirectionVector.mul(stiffness * (springLength - restLength));
 
@@ -228,11 +229,6 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		forces[springs[i].p0].inc(totalF);
 		forces[springs[i].p1].dec(totalF);
-
-
-		//forces[springs[i].p0] = forces[springs[i].p0].add(totalF);
-		//forces[springs[i].p1] = forces[springs[i].p1].sub(totalF);
-
 
 	}
 
@@ -278,6 +274,7 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 			positions[j].z = temp * restitution - restitution + 1;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
+
 	}
 }
 
