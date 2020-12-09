@@ -46,8 +46,14 @@ class MeshDrawer
 		// Get the ids of the uniform variables in the shaders
 		this.mvp = gl.getUniformLocation( this.prog, 'mvp' );
 
+		this.normals = gl.getUniformLocation( this.prog, 'normals' );
+
+		this.mv = gl.getUniformLocation( this.prog, 'mv' );
+
 		// Get the ids of the vertex attributes in the shaders
 		this.vertPos = gl.getAttribLocation( this.prog, 'pos' );
+
+		this.norm = gl.getAttribLocation( this.prog, 'norm' );
 
 		this.txc = gl.getAttribLocation(this.prog,'txc');
 
@@ -61,6 +67,8 @@ class MeshDrawer
 		this.x = gl.getUniformLocation(this.prog,'x');
 		this.y = gl.getUniformLocation(this.prog,'y');
 		this.z = gl.getUniformLocation(this.prog,'z');
+
+		this.shiny = gl.getUniformLocation(this.prog,'shiny');
 
 		this.vertbuffer = gl.createBuffer();
 		this.textureBuffer = gl.createBuffer();
@@ -80,8 +88,6 @@ class MeshDrawer
 	// Note that this method can be called multiple times.
 	setMesh( vertPos, texCoords, normals )
 	{
-		// [TO-DO] Update the contents of the vertex buffer objects.
-		this.numTriangles = vertPos.length / 3;
 		// [TO-DO] Update the contents of the vertex buffer objects.
 		this.numTriangles = vertPos.length / 3;
 
@@ -118,15 +124,25 @@ class MeshDrawer
 	{
 
 		gl.useProgram( this.prog );
-		gl.uniformMatrix4fv( this.mvp, false, matrixMVP );
-		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
-		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
-		gl.enableVertexAttribArray( this.vertPos );
 
+		gl.uniformMatrix4fv( this.mvp, false, matrixMVP );
+		gl.uniformMatrix4fv( this.mv, false, matrixMV );
+		gl.uniformMatrix3fv( this.normals, false, matrixNormal );
 
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.textureBuffer );
 		gl.vertexAttribPointer( this.txc, 2, gl.FLOAT, false, 0, 0 );
 		gl.enableVertexAttribArray( this.txc );
+
+
+		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
+		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.vertPos );
+
+		gl.bindBuffer( gl.ARRAY_BUFFER, this.normalBuffer );
+		gl.vertexAttribPointer( this.norm, 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.norm );
+
+
 		gl.drawArrays( gl.TRIANGLES, 0, this.numTriangles );
 	}
 	
@@ -184,6 +200,8 @@ class MeshDrawer
 	setShininess( shininess )
 	{
 		// [TO-DO] set the uniform parameter(s) of the fragment shader to specify the shininess.
+		gl.useProgram(this.prog);
+		gl.uniform1f(this.shiny,shininess);
 	}
 }
 
@@ -233,9 +251,7 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 	}
 
 	// [TO-DO] Update positions and velocities
-
 	for (let j = 0; j < positions.length; j++) {
-
 		var acc = forces[j].div(particleMass);
 		velocities[j].inc(acc.mul(dt));
 		positions[j].inc(velocities[j].mul(dt));
@@ -246,32 +262,32 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 
 		if (positions[j].x < -1.0 ) {
 			let temp = positions[j].x + 2.0;
-			positions[j].x = temp * restitution - restitution - 1;
+			positions[j].x = temp * restitution - restitution - 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].y < -1.0 ) {
 			let temp = positions[j].y + 2.0;
-			positions[j].y = temp * restitution - restitution - 1;
+			positions[j].y = temp * restitution - restitution - 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].z < -1.0 ) {
 			let temp = positions[j].z + 2.0;
-			positions[j].z = temp * restitution - restitution - 1;
+			positions[j].z = temp * restitution - restitution - 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].x > 1.0 ) {
 			let temp = positions[j].x - 2.0;
-			positions[j].x = temp * restitution - restitution + 1;
+			positions[j].x = temp * restitution - restitution + 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].y > 1.0 ) {
 			let temp = positions[j].y - 2.0;
-			positions[j].y = temp * restitution - restitution + 1;
+			positions[j].y = temp * restitution - restitution + 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 		if (positions[j].z > 1.0 ) {
 			let temp = positions[j].z - 2.0;
-			positions[j].z = temp * restitution - restitution + 1;
+			positions[j].z = temp * restitution - restitution + 1.0;
 			velocities[j] =  velocities[j].mul(-restitution);
 		}
 
@@ -283,10 +299,19 @@ function SimTimeStep( dt, positions, velocities, springs, stiffness, damping, pa
 // Vertex shader source code
 var modelVS = `
 	attribute vec3 pos;
-	uniform mat4 mvp;
+	
+	uniform mat4 mvp,mv;
+	uniform mat3 normals; 
+	
+	attribute vec3 norm; 
+	
 	varying vec2 texCoord;
 	attribute vec2 txc;
 	uniform int swap;
+	
+	varying vec3 newNorm;
+	varying vec3 newDir;
+	
 	
 	void main()
 	{
@@ -298,6 +323,9 @@ var modelVS = `
 		}
 		texCoord = txc;
 		gl_Position = mvp * vec4(someVec,1);
+		newNorm = normalize(normals * norm);
+		newDir  = -1.0 *normalize(vec3(mv * vec4(pos,1)));
+
 	}
 `;
 
@@ -308,17 +336,36 @@ var modelFS = `
 	varying vec2 texCoord;
 	uniform bool toShow;
 	
+	varying vec3 newNorm;
+	varying vec3 newDir;
+	
+	uniform float shiny;
+	
 	uniform float x;
 	uniform float y;
 	uniform float z;
 	
 	void main()
 	{
-		vec3 lightPos = vec3(x,y,z);
+		vec3 lightDir = vec3(x,y,z);
+
+		const float lightInt = 1.0;
+		const float ambientLight = .058;
+		
+		const vec3 specColor = vec3(1,1,1);
+		const vec3 diffuseColor = vec3(1,1,1);
+		const vec3 ambientColor = vec3(1,1,1);
+
+		vec3 h = normalize(lightDir * newDir);
+		
+		float cosTheta = max(dot(lightDir,newNorm) , 0.0);  
+		float cosPhi = max(dot(h,newNorm),0.0);
+		
+		
 		if(toShow){
-			gl_FragColor = texture2D(tex,texCoord);		
+			gl_FragColor = vec4(lightInt*(cosTheta* vec3(texture2D(tex,texCoord))+pow(cosPhi,shiny) * specColor)+ambientLight*ambientColor,1);		
 		} else{
-			gl_FragColor = vec4(1,1,1,1);
+			gl_FragColor = vec4(lightInt*(cosTheta* diffuseColor +pow(cosPhi,shiny) * specColor)+ambientLight*ambientColor,1);	
 		}
 	}
 `;

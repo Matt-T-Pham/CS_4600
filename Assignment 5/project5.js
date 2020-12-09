@@ -50,7 +50,14 @@ class MeshDrawer
 
 		this.txc = gl.getAttribLocation(this.prog,'txc');
 
-		this.norm = gl.getUniformLocation( this.prog, 'normal' );
+
+
+		this.mv_ = gl.getUniformLocation( this.prog, 'mv_' );
+		this.mv = gl.getAttribLocation( this.prog, 'mv' );
+
+		this.norm = gl.getUniformLocation( this.prog, 'norm' );
+		this.normals = gl.getAttribLocation( this.prog, 'normals' );
+
 
 
 		this.sampler = gl.getUniformLocation(this.prog,'tex');
@@ -119,11 +126,17 @@ class MeshDrawer
 	draw( matrixMVP, matrixMV, matrixNormal )
 	{
 
-		gl.useProgram( this.prog );
+
 		gl.uniformMatrix4fv( this.mvp, false, matrixMVP );
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vertbuffer );
 		gl.vertexAttribPointer( this.vertPos, 3, gl.FLOAT, false, 0, 0 );
 		gl.enableVertexAttribArray( this.vertPos );
+
+
+		gl.uniformMatrix4fv( this.norm, false, matrixMV );
+		gl.bindBuffer( gl.ARRAY_BUFFER, this.normalBuffer );
+		gl.vertexAttribPointer( this.normals , 3, gl.FLOAT, false, 0, 0 );
+		gl.enableVertexAttribArray( this.normals  );
 
 
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.textureBuffer );
@@ -196,7 +209,7 @@ class MeshDrawer
 // Vertex shader source code
 var modelVS = `
 	attribute vec3 pos;
-	uniform mat4 mvp,mv;
+	uniform mat4 mvp;
 	varying vec2 texCoord;
 	attribute vec2 txc;
 	uniform int swap;
@@ -221,6 +234,9 @@ var modelFS = `
 	varying vec2 texCoord;
 	uniform bool toShow;
 	
+	uniform mat4 normal;
+	
+	
 	uniform float x;
 	uniform float y;
 	uniform float z;
@@ -229,6 +245,8 @@ var modelFS = `
 	
 	void main()
 	{
+	
+
 		vec3 lightPos = vec3(x,y,z);
 		
 		
